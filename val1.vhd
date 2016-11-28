@@ -8,8 +8,7 @@ entity val1 is
     port(
     NewWord         :   IN  STD_LOGIC_VECTOR(n-1 downto 0);	--cadena recien hecha
     AlreadyInWord   :   IN  STD_LOGIC_VECTOR(n-1 downto 0);	--cadena de comprobacion
-    FinalWord       :   OUT STD_LOGIC_VECTOR(n-1 downto 0);	--cadena de comprobacion nueva 
-    --Great           :   OUT STD_LOGIC;
+    FinalWord       :   OUT STD_LOGIC_VECTOR(n-1 downto 0);	--cadena de comprobacion nueva, regresa como entrada
     GoodWord        :   OUT STD_LOGIC_VECTOR(n-1 downto 0)	--palabra que saldra si pasa los filtros
     );
 end val1;
@@ -32,13 +31,6 @@ begin
     end loop;
 end process;  
 
---process (GoodWord)
---begin
-	--if ( GoodWord ="00000000") then
-      --      Great<='0';
-        --else
-          --  Great<='1';
-        --end if;
---end process;
+
 end Behavioral;
     
