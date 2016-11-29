@@ -5,7 +5,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity verificador 
 is generic(
-    n:integer:=8
+    n:integer:=31
 );
 is port(
     A: in STD_LOGIC_VECTOR(n-1 downto 0);
