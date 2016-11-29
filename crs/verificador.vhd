@@ -7,7 +7,7 @@ entity verificador
 is generic(
     n:integer:=31
 );
-is port(
+ port(
     A: in STD_LOGIC_VECTOR(n-1 downto 0);
     B: in STD_LOGIC_VECTOR(n-1 downto 0);
     Bool: out STD_LOGIC
@@ -16,7 +16,7 @@ end verificador;
 
 architecture Behavioral of verificador is
     begin
-        process (numero,indice)
+        process (A,B)
         begin
             if( A = B) then
             Bool<= '1';

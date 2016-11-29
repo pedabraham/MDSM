@@ -7,7 +7,7 @@ entity sumador
 is generic(
     n:integer:=8
 );
-is port(
+ port(
     A: in STD_LOGIC_VECTOR(n-1 downto 0);
     B: in STD_LOGIC_VECTOR(3 downto 0);
     resultado:  out STD_LOGIC_VECTOR(29 downto 0)
@@ -16,8 +16,8 @@ end sumador;
 
 architecture Behavioral of sumador is
     begin
-        process (numero,indice)
+        process (A,B)
         begin
-        resultado <= signed(A) +signed(B);
+        resultado <= unsigned(A) +unsigned(B);
         end process;
 end Behavioral;
