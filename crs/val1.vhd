@@ -17,7 +17,7 @@ end val1;
 
 architecture Behavioral of val1 is 
 begin
-    signal AlreadyInWord: STD_LOGIC_VECTOR(n-1 downto 0);
+    signal AlreadyInWord,FinalWord: STD_LOGIC_VECTOR(n-1 downto 0);
     process (NewWord,AlreadyInWord)
     begin
         for I in 0 to n-1 loop
