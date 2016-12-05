@@ -1,36 +1,37 @@
 library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_arith.all;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.STD_LOGIC_ARITH.all;
+use IEEE.STD_LOGIC_UNSIGNED.all;
 ---------------------------------------------------
-entity contador is
-generic(
-	n : INTEGER := 4
-); 
-port(
-	num : in std_logic_vector(8 downto 0);
-	clk : in std_logic;
-	CE  : in std_logic;
-	count : out std_logic_vector(n-1 downto 0)
-);
-end contador;
+entity Contador is
+	generic(
+		n : INTEGER := 4
+	); 
+	port(
+		GoodWord : IN STD_LOGIC_VECTOR(8 downto 0);	--Palbra generada por los sensores.
+		clk : IN STD_LOGIC;
+		CE  : IN STD_LOGIC;
+		Indice : OUT STD_LOGIC_VECTOR(n-1 downto 0) --Indica el turno en que se detecto un sensor.
+	);
+end Contador;
 ---------------------------------------------------
-architecture simple of contador is
+architecture Behavioral of Contador is
 -------------------SIGNALS-------------------------
 signal N_S : std_logic_vector(n-1 downto 0);
 signal P_S : std_logic_vector(n-1 downto 0);
----------------------------------------------------
+-------------------PROCESS-------------------------
 begin 
-	comb : process(num, P_S, count)
+	comb : process(GoodWord, P_S, Indice)
 	begin 
-		if(num = "000000000")then 
-			
+		if(Goodword = "000000000") then 
+			--No hacer nada si no se detecta ningun sensor--	
 		else
-			if(P_S = "1001") then
+			if(P_S = "1001") then	--
 				N_S <= (others => '0');
 			else 
 				N_S <= P_S + 1;
 			end if;
-			count <= P_S;
+			Indice <= P_S;
 		end if;
 	end process comb;
 
@@ -43,4 +44,4 @@ begin
 		end if;
 	end process sequ;
 
-end simple;
+end Behavioral;
