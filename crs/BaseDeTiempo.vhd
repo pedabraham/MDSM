@@ -14,7 +14,9 @@ end BaseDeTiempo;
 
 architecture Behavioral of BaseDeTiempo is
 begin
-
+process (NewWord)
+begin
+	CE<= NewWord(0) OR NewWord(1) OR NewWord(2) OR NewWord(3) OR NewWord(4) OR NewWord(5)OR NewWord(6) OR NewWord(7) OR NewWord(8);
 		
 
 end Behavioral;
