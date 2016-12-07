@@ -1,5 +1,5 @@
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL
+use IEEE.STD_LOGIC_1164.ALL;
 
 entity Diseno is
 	port(
@@ -53,7 +53,7 @@ end component;
 component Verificador1 is
 	port(
 		bool : in STD_LOGIC;
-		Count : in STD_LOGIC;
+		Count : in STD_LOGIC_VECTOR(3 downto 0);
 		CLK : in STD_LOGIC;
 		CE : in STD_LOGIC;
 		Salida : out STD_LOGIC

@@ -20,7 +20,7 @@ signal N_S : std_logic_vector(n-1 downto 0);
 signal P_S : std_logic_vector(n-1 downto 0);
 -------------------PROCESS-------------------------
 begin 
-	comb : process(P_S, Count)
+	comb : process(P_S)
 	begin 
 		if ( P_S = "1001" ) then
 			N_S <= "0000";
