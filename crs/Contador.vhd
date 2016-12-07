@@ -10,6 +10,7 @@ entity Contador is
 	port(
 		clk : IN STD_LOGIC;
 		CE  : IN STD_LOGIC;
+		Clr : IN STD_LOGIC;
 		Count : OUT STD_LOGIC_VECTOR(n-1 downto 0) --Indica el turno en que se detecto un sensor.
 	);
 end Contador;
@@ -34,7 +35,12 @@ begin
 
 	sequ : process(clk, CE, N_S)
 	begin
-		if (clk'event AND clk = '1') then
+
+	if(Clr='1') then
+		N_S <= "0000";
+		P_S <= "0000";
+	
+	elsif (clk'event AND clk = '1') then
 			if (CE = '1') then
 				P_S <=	N_S; 
 			end if;

@@ -9,6 +9,7 @@ entity Verificador1 is
 		Count : in STD_LOGIC_VECTOR(3 downto 0);
 		CLK : in STD_LOGIC;
 		CE : in STD_LOGIC;
+		Clr : IN STD_LOGIC;
 		Salida : out STD_LOGIC
 	);
 end Verificador1;
@@ -30,7 +31,12 @@ architecture Behavioral of Verificador1 is
 
 	sequ : process(CLK, CE)
 	begin
-		if(CLK'event AND CLK = '1') then
+
+	if(Clr='1') then
+		N_S <= "000000";
+		P_S <= "000000";
+	
+	elsif (CLK'event AND CLK = '1') then
 			if(CE = '1') then
 				P_S <= N_S;
 			end if;
