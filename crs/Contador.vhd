@@ -11,6 +11,7 @@ entity Contador is
 		GoodWord : IN STD_LOGIC_VECTOR(8 downto 0);	--Palbra generada por los sensores.
 		clk : IN STD_LOGIC;
 		CE  : IN STD_LOGIC;
+		Clr : IN STD_LOGIC;
 		Indice : OUT STD_LOGIC_VECTOR(n-1 downto 0) --Indica el turno en que se detecto un sensor.
 	);
 end Contador;
