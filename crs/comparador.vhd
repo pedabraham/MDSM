@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity verificador 
+entity comparador 
 is generic(
     n:integer:=31
 );
@@ -12,9 +12,9 @@ is generic(
     B: in STD_LOGIC_VECTOR(n-1 downto 0);
     Bool: out STD_LOGIC
 );
-end verificador;
+end comparador;
 
-architecture Behavioral of verificador is
+architecture Behavioral of comparador is
     begin
         process (A,B)
         begin
