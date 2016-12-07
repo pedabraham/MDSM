@@ -8,10 +8,9 @@ entity Contador is
 		n : INTEGER := 4
 	); 
 	port(
-		GoodWord : IN STD_LOGIC_VECTOR(8 downto 0);	--Palbra generada por los sensores.
 		clk : IN STD_LOGIC;
 		CE  : IN STD_LOGIC;
-		Indice : OUT STD_LOGIC_VECTOR(n-1 downto 0) --Indica el turno en que se detecto un sensor.
+		Count : OUT STD_LOGIC_VECTOR(n-1 downto 0) --Indica el turno en que se detecto un sensor.
 	);
 end Contador;
 ---------------------------------------------------
@@ -21,18 +20,16 @@ signal N_S : std_logic_vector(n-1 downto 0);
 signal P_S : std_logic_vector(n-1 downto 0);
 -------------------PROCESS-------------------------
 begin 
-	comb : process(GoodWord, P_S, Indice)
+	comb : process(P_S, Count)
 	begin 
-		if(Goodword = "000000000") then 
-			--No hacer nada si no se detecta ningun sensor--	
+		if ( P_S = "1001" ) then
+			N_S <= "0000";
 		else
-			if(P_S = "1001") then	--
-				N_S <= (others => '0');
-			else 
-				N_S <= P_S + 1;
-			end if;
-			Indice <= P_S;
-		end if;
+			N_S <= P_S + 1;
+		end if;				
+
+		Count <= P_S;
+
 	end process comb;
 
 	sequ : process(clk, CE, N_S)
@@ -43,5 +40,4 @@ begin
 			end if;
 		end if;
 	end process sequ;
-
 end Behavioral;
