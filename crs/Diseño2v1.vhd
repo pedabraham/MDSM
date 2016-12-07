@@ -84,7 +84,7 @@ begin
 TimeBasis: BaseDeTiempo port map(CLK<=CLK,NewWord<=sensores,CE<=CE);
 BTN:       bitsToNumbers port map(cadenaOriginalDeBits<=sensores,numero<=numero);
 Comp:      comparador port map(A<=valor,B<=numero,bool<=bool);
-Cont:      Contador port map(clk<=CLK,CE<=CE,)count<=count);
+Cont:      Contador port map(clk<=CLK,CE<=CE,count<=count);
 Ro:        ROM port map (Count<=count ,valor<=valor);  
 Verifica:  Verificador1 port map (bool<=bool,count<=count,clk<=clk,CE<=CE,Salida<=abre);
 
