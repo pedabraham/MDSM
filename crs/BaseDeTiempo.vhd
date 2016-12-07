@@ -14,7 +14,7 @@ end BaseDeTiempo;
 
 architecture Behavioral of BaseDeTiempo is
 begin
-	
 
+		
 
 end Behavioral;
