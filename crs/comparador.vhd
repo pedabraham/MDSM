@@ -5,7 +5,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity comparador 
 is generic(
-    n:integer:=31
+    n:integer:=4
 );
  port(
     A: in STD_LOGIC_VECTOR(n-1 downto 0);
