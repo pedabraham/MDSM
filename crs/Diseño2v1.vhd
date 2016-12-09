@@ -1,12 +1,13 @@
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_1164.ALL; 
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
 
 entity Diseno is
 	port(
-
-    sensores: IN STD_LOGIC_VECTOR(8 downto 0);
-    clk     : IN STD_LOGIC;
-    abre    : OUT STD_LOGIC
+	    sensores: IN STD_LOGIC_VECTOR(8 downto 0);
+	    clk     : IN STD_LOGIC;
+	    abre    : OUT STD_LOGIC
     );
 end Diseno;
 
@@ -17,37 +18,42 @@ component BaseDeTiempo is
 		n : integer := 9
 	);
 	port(
-		CLK : IN STD_LOGIC;
 		NewWord : IN STD_LOGIC_VECTOR(n-1 downto 0);
 		CE  : OUT STD_LOGIC
 	);
 end component;
 
-component  bitsToNumbers is port(
-    cadenaOriginalDeBits:   IN   STD_LOGIC_VECTOR(8 downto 0);
-    numero              :   OUT  STD_LOGIC_VECTOR(3 downto 0)
-
-);
+component BasedeTiempo2 is
+	port(
+		clk : in std_logic;
+		rst_in : in std_logic;
+		rst_out : out std_logic
+	);
 end component;
 
-
+component  bitsToNumbers is 
+	port(
+    	cadenaOriginalDeBits:   IN   STD_LOGIC_VECTOR(8 downto 0);
+   		numero              :   OUT  STD_LOGIC_VECTOR(3 downto 0)
+	);
+end component;
 
 component ROM is 
-port(
-	Count : in STD_LOGIC_VECTOR(3 downto 0);
-	Valor : out STD_LOGIC_VECTOR(3 downto 0)
-);
+	port(
+		Count : in STD_LOGIC_VECTOR(3 downto 0);
+		Valor : out STD_LOGIC_VECTOR(3 downto 0)
+	);
 end component;
 
-component comparador 
-is generic(
-    n:integer:=4
-);
- port(
-    A: in STD_LOGIC_VECTOR(n-1 downto 0);
-    B: in STD_LOGIC_VECTOR(n-1 downto 0);
-    Bool: out STD_LOGIC
-);
+component comparador is 
+	generic(
+	    n:integer:=4
+	);
+	 port(
+	    A: in STD_LOGIC_VECTOR(n-1 downto 0);
+	    B: in STD_LOGIC_VECTOR(n-1 downto 0);
+	    Bool: out STD_LOGIC
+	);
 end component;
 
 component Verificador1 is
@@ -56,6 +62,8 @@ component Verificador1 is
 		Count : in STD_LOGIC_VECTOR(3 downto 0);
 		CLK : in STD_LOGIC;
 		CE : in STD_LOGIC;
+		Clr : in STD_LOGIC;
+		Verif : out STD_LOGIC_VECTOR(9 downto 0);
 		Salida : out STD_LOGIC
 	);
 end component;
@@ -67,26 +75,28 @@ component Contador is
 	port(
 		clk : IN STD_LOGIC;
 		CE  : IN STD_LOGIC;
+		clr : IN STD_LOGIC;
 		Count : OUT STD_LOGIC_VECTOR(n-1 downto 0) --Indica el turno en que se detecto un sensor.
 	);
 end component;
 
 --SIGNALS--
 
-signal CE,bool :STD_LOGIC;   
-signal numero,valor,count: STD_LOGIC_VECTOR(3 downto 0);
-
+signal CE,bool,rst :STD_LOGIC;   
+signal numero,valor,count: STD_LOGIC_VECTOR(3 downto 0); 
+signal Verif : STD_LOGIC_VECTor(9 downto 0);
 
 begin
 
 --port map--
 
-TimeBasis: BaseDeTiempo port map(CLK<=CLK,NewWord<=sensores,CE<=CE);
-BTN:       bitsToNumbers port map(cadenaOriginalDeBits<=sensores,numero<=numero);
-Comp:      comparador port map(A<=valor,B<=numero,bool<=bool);
-Cont:      Contador port map(clk<=CLK,CE<=CE,count<=count);
-Ro:        ROM port map (Count<=count ,valor<=valor);  
-Verifica:  Verificador1 port map (bool<=bool,count<=count,clk<=clk,CE<=CE,Salida<=abre);
+TimeBasis: BaseDeTiempo port map(NewWord=>sensores,CE=>CE);
+TimeBasis2: BaseDeTiempo2 port map(CLK=>CLK,rst_in=>CE,rst_out=>rst);
+BTN:     	bitsToNumbers port map(cadenaOriginalDeBits=>sensores,numero=>numero);
+Comp:      comparador port map(A=>valor,B=>numero,bool=>bool);
+Cont:      Contador port map(CLK=>CLK,CE=>CE,clr=>rst,count=>count);
+Ro:        ROM	port map (Count=>count,valor=>valor);
+Verifica:  Verificador1 port map (bool=>bool,count=>count,CLK=>CLK,CE=>CE,clr=>rst,Verif=>Verif,Salida=>abre);
 
 
 end Behavioral;

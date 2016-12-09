@@ -3,10 +3,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 
 entity ROM is 
-port(
-	Count : in STD_LOGIC_VECTOR(3 downto 0);
-	Valor : out STD_LOGIC_VECTOR(3 downto 0)
-);
+	port(
+		Count : in STD_LOGIC_VECTOR(3 downto 0);
+		Valor : out STD_LOGIC_VECTOR(3 downto 0)
+	);
 end ROM;
 
 Architecture Behavioral of ROM is

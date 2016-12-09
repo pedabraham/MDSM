@@ -6,7 +6,7 @@ use IEEE.STD_LOGIC_UNSIGNED.all;
 entity Contador is
 	generic(
 		n : INTEGER := 4
-	); 
+	);
 	port(
 		clk : IN STD_LOGIC;
 		CE  : IN STD_LOGIC;
@@ -33,17 +33,15 @@ begin
 
 	end process comb;
 
-	sequ : process(clk, CE, N_S)
+	sequ : process(clk, CE, N_S,clr)
 	begin
-
-	if(Clr='1') then
-		N_S <= "0000";
-		P_S <= "0000";
-	
-	elsif (clk'event AND clk = '1') then
-			if (CE = '1') then
-				P_S <=	N_S; 
+		if(Clr = '1') then
+			P_S <= "0000";
+		
+		elsif (clk'event AND clk = '1') then
+				if (CE = '1') then
+					P_S <=	N_S; 
+				end if;
 			end if;
-		end if;
-	end process sequ;
+		end process sequ;
 end Behavioral;
