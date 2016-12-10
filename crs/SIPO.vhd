@@ -10,7 +10,6 @@ entity SIPO is
     port(
     Bool: IN     STD_LOGIC; 
     Clk : IN     STD_LOGIC;
-    CLK : IN     STD_LOGIC;
 	CE  : IN     STD_LOGIC;
 	Clr : IN     STD_LOGIC;
     P   : OUT    STD_LOGIC_VECTOR(n-1 downto 0)
@@ -21,11 +20,12 @@ end SIPO;
 architecture Behavioral of SIPO is
 signal P_S,N_S: STD_LOGIC_VECTOR(n-1 downto 0);
 begin 
-    comb: process(P_S,N_S)
+    comb: process(P_S,N_S,Bool)
     begin
-        N_S(0)<=S;
-        N_S(n-1 downto 1) <= P_S (n-2 downto 0);
-        P <= P_S;
+       N_S(n-1) <= Bool;
+		N_S(n-2 downto 0)<= P_S (n-1 downto 1);
+        
+        P  <= N_S;;
     end process comb;
 
     sequ: process (Clk)
