@@ -25,7 +25,7 @@ begin
        N_S(n-1) <= Bool;
 		N_S(n-2 downto 0)<= P_S (n-1 downto 1);
         
-        P  <= N_S;;
+        P  <= N_S;
     end process comb;
 
     sequ: process (Clk,CE,CLr,N_S)
