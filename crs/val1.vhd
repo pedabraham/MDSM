@@ -7,7 +7,6 @@ entity val1 is
     );
     port(
     NewWord         :   IN  STD_LOGIC_VECTOR(n-1 downto 0);	--cadena recien hecha
-    CE              :   IN  STD_LOGIC;
     Clk             :   IN  STD_LOGIC;
     GoodWord        :   OUT STD_LOGIC_VECTOR(n-1 downto 0)	--palabra que saldra si pasa los filtros
     );
@@ -37,10 +36,8 @@ begin
     sequ: process(CE,Clk,FinalWord) 
     begin
 
-    if(Clk'event AND Clk='1') then 
-			if (CE = '1') then
-				AlreadyInWord<=FinalWord;
-			end if;
+    if(Clk'event AND Clk='1') then 		
+				AlreadyInWord<=FinalWord;		
 	end if;
     end process; 
 
