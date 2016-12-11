@@ -28,7 +28,7 @@ begin
         P  <= N_S;;
     end process comb;
 
-    sequ: process (Clk)
+    sequ: process (Clk,CE,CLr,N_S)
     begin
         if(Clr = '1') then
 			P_S <= (others => '0'); 
