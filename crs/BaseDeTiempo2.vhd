@@ -11,7 +11,7 @@ entity BasedeTiempo2 is
 	);
 end BasedeTiempo2;
 ---------------------------------------------------
-architecture simple of BasedeTiempo2 is
+architecture Behavioral of BasedeTiempo2 is
 -------------------Signals-------------------------
 	signal N_S : std_logic_vector(3 downto 0);
 	signal P_S : std_logic_vector(3 downto 0);
@@ -37,4 +37,4 @@ begin
 			P_S <= N_S;
 		end if;
 	end process sequ; 
-end simple;
+end Behavioral;
