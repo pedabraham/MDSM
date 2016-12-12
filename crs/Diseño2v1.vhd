@@ -51,22 +51,23 @@ component comparador is
 	);
 	 port(
 	    A: in STD_LOGIC_VECTOR(n-1 downto 0);
-	    B: in STD_LOGIC_VECTOR(n-1 downto 0);
-	    Bool: out STD_LOGIC
+        B: in STD_LOGIC_VECTOR(n-1 downto 0);
+        CLK: in STD_LOGIC;
+        Clr : in STD_LOGIC;
+        Count : in STD_LOGIC_VECTOR(3 downto 0);
+        Bool: out STD_LOGIC
 	);
 end component;
 
-component Verificador1 is
-	port(
-		bool : in STD_LOGIC;
-		Count : in STD_LOGIC_VECTOR(3 downto 0);
-		CLK : in STD_LOGIC;
-		CE : in STD_LOGIC;
-		Clr : in STD_LOGIC;
-		Verif : out STD_LOGIC_VECTOR(9 downto 0);
-		Salida : out STD_LOGIC
-	);
-end component;
+--component Verificador1 is
+--	port(
+--		bool : in STD_LOGIC;
+--		Count : in STD_LOGIC_VECTOR(3 downto 0);
+--		CLK : in STD_LOGIC;
+--		Clr : in STD_LOGIC;
+--		Salida : out STD_LOGIC
+--	);
+--end component;
 
 component Contador is
 	generic(
@@ -74,7 +75,6 @@ component Contador is
 	); 
 	port(
 		clk : IN STD_LOGIC;
-		CE  : IN STD_LOGIC;
 		clr : IN STD_LOGIC;
 		Count : OUT STD_LOGIC_VECTOR(n-1 downto 0) --Indica el turno en que se detecto un sensor.
 	);
@@ -82,9 +82,8 @@ end component;
 
 --SIGNALS--
 
-signal CE,bool,rst :STD_LOGIC;   
+signal CE,rst :STD_LOGIC;   
 signal numero,valor,count: STD_LOGIC_VECTOR(3 downto 0); 
-signal Verif : STD_LOGIC_VECTor(9 downto 0);
 
 begin
 
@@ -93,10 +92,14 @@ begin
 TimeBasis: BaseDeTiempo port map(NewWord=>sensores,CE=>CE);
 TimeBasis2: BaseDeTiempo2 port map(CLK=>CLK,rst_in=>CE,rst_out=>rst);
 BTN:     	bitsToNumbers port map(cadenaOriginalDeBits=>sensores,numero=>numero);
-Comp:      comparador port map(A=>valor,B=>numero,bool=>bool);
-Cont:      Contador port map(CLK=>CLK,CE=>CE,clr=>rst,count=>count);
+Comp:      comparador port map(A=>valor,B=>numero,CLK=>CE,Clr=>rst,Count=>Count,Bool=>abre);
+Cont:      Contador port map(CLK=>CE,clr=>rst,count=>count);
 Ro:        ROM	port map (Count=>count,valor=>valor);
-Verifica:  Verificador1 port map (bool=>bool,count=>count,CLK=>CLK,CE=>CE,clr=>rst,Verif=>Verif,Salida=>abre);
 
+
+--Verifica:  Verificador1 port map (bool=>bool,count=>count,CLK=>CE,clr=>rst,Salida=>abre);
+
+
+--CE1 <= '0' when RTS = '0' else CE when rising_edge(CLK);
 
 end Behavioral;
