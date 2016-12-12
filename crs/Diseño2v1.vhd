@@ -90,17 +90,17 @@ component SIPO is
 );
 end component;
 
-component val1 is
- generic(
-        n:integer:=9
-    );
-    port(
-    NewWord         :   IN  STD_LOGIC_VECTOR(n-1 downto 0);	--cadena recien hecha
-    CE              :   IN  STD_LOGIC;
-    Clk             :   IN  STD_LOGIC;
-    GoodWord        :   OUT STD_LOGIC_VECTOR(n-1 downto 0)	--palabra que saldra si pasa los filtros
-    );
-end component;
+--component val1 is
+ --generic(
+   --     n:integer:=9
+    --);
+    --port(
+    --NewWord         :   IN  STD_LOGIC_VECTOR(n-1 downto 0);	--cadena recien hecha
+    --CE              :   IN  STD_LOGIC;
+    --Clk             :   IN  STD_LOGIC;
+    --GoodWord        :   OUT STD_LOGIC_VECTOR(n-1 downto 0)	--palabra que saldra si pasa los filtros
+    --);
+--end component;
 
 --SIGNALS--
 
@@ -116,11 +116,11 @@ TimeBasis: 	BaseDeTiempo port map(NewWord=>palabraATimeBasis,CE=>CE);
 TimeBasis2: BaseDeTiempo2 port map(CLK=>CLK,rst_in=>CE,rst_out=>rst);
 BTN:     	bitsToNumbers port map(cadenaOriginalDeBits=>sensores,numero=>numero);
 Comp:      	comparador port map(A=>valor,B=>numero,bool=>bool);
-Cont:      	Contador port map(CLK=>CLK,CE=>CE,clr=>rst,count=>count);
+Cont:      	Contador port map(CLK=>CE,clr=>rst,count=>count);
 Ro:        	ROM	port map (Count=>count,valor=>valor);
 Verifica:  	Verificador1 port map (P=>P,count=>count,salida=>abre);
-Sip:		SIPO port map(Bool=>bool,clk=>clk,CE=>CE,clr=>rst,P=>P);
-val:		val1 port map(NewWord=>sensores,clk=>CLK,GoodWord=>palabraATimeBasis)
+Sip:		SIPO port map(Bool=>bool,clk=>CE,clr=>rst,P=>P);
+--val:		val1 port map(NewWord=>sensores,clk=>clk,GoodWord=>palabraATimeBasis)
 
 
 end Behavioral;

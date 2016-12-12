@@ -9,7 +9,6 @@ entity Contador is
 	);
 	port(
 		clk : IN STD_LOGIC;
-		CE  : IN STD_LOGIC;
 		Clr : IN STD_LOGIC;
 		Count : OUT STD_LOGIC_VECTOR(n-1 downto 0) --Indica el turno en que se detecto un sensor.
 	);
@@ -33,15 +32,13 @@ begin
 
 	end process comb;
 
-	sequ : process(clk, CE, N_S,clr)
+	sequ : process(clk, N_S,clr)
 	begin
 		if(Clr = '1') then
 			P_S <= "0000";
 		
 		elsif (clk'event AND clk = '1') then
-				if (CE = '1') then
 					P_S <=	N_S; 
-				end if;
 			end if;
 		end process sequ;
 end Behavioral;

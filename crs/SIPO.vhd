@@ -10,7 +10,6 @@ entity SIPO is
     port(
     Bool: IN     STD_LOGIC; 
     Clk : IN     STD_LOGIC;
-	CE  : IN     STD_LOGIC;
 	Clr : IN     STD_LOGIC;
     P   : OUT    STD_LOGIC_VECTOR(n-1 downto 0)
 
@@ -28,11 +27,11 @@ begin
         P  <= N_S;
     end process comb;
 
-    sequ: process (Clk,CE,CLr,N_S)
+    sequ: process (Clk,CLr,N_S)
     begin
         if(Clr = '1') then
 			P_S <= (others => '0'); 
-        elsif(Clk'event AND Clk='1'AND CE='1')then
+        elsif(Clk'event AND Clk='1')then
             P_S<=N_S;
         end if;
     end process sequ;
