@@ -2,15 +2,15 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 
-entity ROM is 
+entity ROM2 is 
 	port(
 		Count       : in    STD_LOGIC_VECTOR(3 downto 0);
         palabrasEnt : in    std_logic_vector(35 downto 0) ;
 		Valor       : out   STD_LOGIC_VECTOR(3 downto 0)
 	);
-end ROM;
+end ROM2;
 
-Architecture Behavioral of ROM is
+Architecture Behavioral of ROM2 is
 begin
 	process(Count)
 	begin
