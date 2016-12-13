@@ -14,6 +14,9 @@ architecture behavioral of cadenaSelector is
 
 begin
 
+seq : process( cadenaCC )
+begin
+
     case seleccion is
     
         when "00" => cadenaF <= "000000001001100001110101001100100001";
@@ -21,6 +24,9 @@ begin
         when others => cadenaF <="000000000000000000000000000000000000";
     
     end case ;
+    
+end process ; -- seq
+    
 
 
 end behavioral ;
