@@ -14,9 +14,9 @@ entity val2 is
 end val2;
 
 architecture Behavioral of val2 is 
-begin
     signal AlreadyInWord    :   STD_LOGIC_VECTOR(n-1 downto 0); --cadena de comprobacion o estado presente
     signal FinalWord        :   STD_LOGIC_VECTOR(n-1 downto 0); --cadena de comprobacion nueva o proximo estado
+begin
 
     comb: process (NewWord,AlreadyInWord)
     begin
@@ -31,10 +31,10 @@ begin
 
     end process; 
 
-    sequ: process(CE,Clk,FinalWord) 
+    sequ: process(rst,Clk,FinalWord) 
     begin
-    if(Clr = '1') then
-			P_S <= (others => '0');
+    if(rst = '1') then
+			AlreadyInWord <= (others => '0');
 
     elsif(Clk'event AND Clk='1') then 		
 				AlreadyInWord<=FinalWord;		
