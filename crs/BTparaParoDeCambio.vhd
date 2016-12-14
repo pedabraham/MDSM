@@ -14,15 +14,16 @@ end BasedeTCambio;
 ---------------------------------------------------
 architecture Behavioral of BasedeTCambio is
 -------------------Signals-------------------------
-	signal N_S : std_logic_vector(3 downto 0);
-	signal P_S : std_logic_vector(3 downto 0);
+	signal N_S : std_logic_vector(27 downto 0); --27 downto 0
+	signal P_S : std_logic_vector(27 downto 0); --27 downto 0
 -------------------Process-------------------------
 begin
 	comb : process(P_S)
 	begin
         if(cambioOn='1')then
-		--if(P_S = "11101110011010110010100000000") then
-		if(P_S = "0011") then--3 segundos para dajar de grabar valores en la cola
+		if(P_S = "1000111100001101000110000000") then
+		--3 segundos para dajar de grabar valores en la cola			
+		--if(P_S = "0011") then
 			N_S <= (others => '0');
 		    Cambio <= '1';  
 		else 
