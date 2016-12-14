@@ -1,0 +1,6 @@
+{
+  "name": "MDSM",
+  "tagline": "Alohomora!",
+  "body": "# MDSM\r\n\r\nUse your hands to open doors, chambers of Secrets or a simple box.\r\n\r\nAll you need is: \r\n* An FPGA\r\n\r\nThe project use FPGA and VHDL to complete the task.\r\n\r\nDiagram\r\n\r\n![-blank uml - page 1 4](https://cloud.githubusercontent.com/assets/16860088/20862740/e50a6e78-b978-11e6-92dc-f3f3e07ff8e7.png)\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
