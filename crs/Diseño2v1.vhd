@@ -81,7 +81,7 @@ component Contador is
 	);
 end component;
 
-entity val2 is
+component val2 is
  generic(
         n:integer:=9
     );
@@ -91,7 +91,7 @@ entity val2 is
 	rst				:	IN  STD_LOGIC;
     GoodWord        :   OUT STD_LOGIC_VECTOR(n-1 downto 0)	--palabra que saldra si pasa los filtros
     );
-end val2;
+end component;
 
 --SIGNALS--
 
