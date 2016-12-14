@@ -19,9 +19,8 @@ begin
 
     case seleccion is
     
-        when "00" => cadenaF <= "000000001001100001110101001100100001";
-        when "01" => cadenaF <= cadenaCC;
-        when others => cadenaF <="000000000000000000000000000000000000";
+        when "0" => cadenaF <= "000000001001100001110101001100100001";
+        when others => cadenaF <=cadenaCC;
     
     end case ;
     

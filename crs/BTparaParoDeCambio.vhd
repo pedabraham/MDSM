@@ -8,7 +8,7 @@ entity BasedeTCambio is
 		clk         : in    std_logic;
 		rst_in      : in    std_logic;
         cambioOn    : in    std_logic;--señal que indica que el cambio se tiene que ejecutar
-		Cambio  : out   std_logic -- señal que se va embiar para parar el cambio
+		paro  : out   std_logic -- señal que se va embiar para parar el cambio
 	);
 end BasedeTCambio;
 ---------------------------------------------------
@@ -19,22 +19,16 @@ architecture Behavioral of BasedeTCambio is
 -------------------Process-------------------------
 begin
 	comb : process(P_S)
-	begin
-        if(cambioOn='1')then
+	begin    
 		if(P_S = "1000111100001101000110000000") then
 		--3 segundos para dajar de grabar valores en la cola			
 		--if(P_S = "0011") then
 			N_S <= (others => '0');
-		    Cambio <= '1';  
+		    paro <= '1';  
 		else 
 			N_S <= P_S + '1';
-			Cambio <= '0';
+			paro <= '0';
 		end if;
-        end if;
-        else 
-        N_S <= (others => '0');
-        P_S <= (others => '0');
-        Cambio <= '0';
 
 	end process comb; 	
 	
@@ -50,6 +44,6 @@ begin
         else 
         N_S <= (others => '0');
         P_S <= (others => '0');
-        Cambio <= '0';
+        paro <= '0';
 	end process sequ; 
 end Behavioral;

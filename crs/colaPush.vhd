@@ -10,8 +10,11 @@ entity colaPush is
         Clr         : in    STD_LOGIC;
         cambio      : in    std_logic;
         Count       : in    STD_LOGIC_VECTOR(3  downto 0);
-        cadenaActu  : in    STD_LOGIC_VECTOR(35 downto 0);   
+        cadenaActu  : in    STD_LOGIC_VECTOR(35 downto 0);  
+        paro        : in    STD_LOGIC; 
         cadenaFinal : out   STD_LOGIC_VECTOR(35 downto 0);
+        estadoCambio: out   std_logic;
+        eatadoCadena: out   std_logic;
         longitud    : out   std_logic_vector(3 downto 0)
     );
 end colaPush;
@@ -36,9 +39,13 @@ begin
     seq: process (CLK,Clr,Count,numero,cambio)
     begin
         if(CLK'event AND CLK = '1'AND cambio='1') then        
-            cola(conv_integer(Count)+1*4 downto conv_integer(Count)*4) <= numero;
+            cola((conv_integer(Count)-1)*4 downto (conv_integer(Count)-1)*4) <= numero;
             cadenaFinal <= cola;
             P_S<=N_S;
+            if(paro='1'AND P_S!= (others => '0') ) then
+                cola(35 downto conv_integer(P_S)*4)<=(others => '0');
+                estadoCambio <= '0';
+                estadoCadena <= '1';
         elsif(Clr = '1')then
             cola <= (others => '0');
             P_S  <= (others => '0');

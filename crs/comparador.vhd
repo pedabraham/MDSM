@@ -12,6 +12,7 @@ entity comparador is
         B: in STD_LOGIC_VECTOR(n-1 downto 0);
         CLK: in STD_LOGIC;
         Clr : in STD_LOGIC;
+        longCad :   STD_LOGIC;
         Count : in STD_LOGIC_VECTOR(3 downto 0);
         Bool: out STD_LOGIC
     );
@@ -19,16 +20,18 @@ end comparador;
 
 architecture Behavioral of comparador is
 signal N_S : std_logic_vector(9 downto 0);
+signal cadenaComparacion    :   std_logic_vector(8 downto 0) ;
 begin
     process (A,B,CLK,Clr,Count)
-    begin
+    begin 
+        cadenaComparacion <= (8-longCad => '0') & (others => '1');    
         if(CLK'event AND CLK = '1') then        
             if( A = B) then
                 N_S(conv_integer(Count)) <= '1';
             else
                 N_S(conv_integer(Count)) <= '0';
             end if;
-        elsif(N_S(6 downto 0) = "1111111" )then
+        elsif(N_S(8 downto 0) = cadenaComparacion )then
             Bool <= '1';
         elsif(Clr = '1')then
             N_S <= (others => '0');
