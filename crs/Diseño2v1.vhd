@@ -7,7 +7,7 @@ entity Diseno is
 	port(
 	    sensores	: IN STD_LOGIC_VECTOR(8 downto 0);
 	    clk     	: IN STD_LOGIC;
-		resetAbsouto: IN STD_LOGIC; 
+		resetAbsoluto: IN STD_LOGIC; 
 	    abre    	: OUT STD_LOGIC
     );
 end Diseno;
@@ -95,39 +95,34 @@ end component;
 
 --SIGNALS--
 
-signal CE,CE2,rst :			STD_LOGIC;   
+signal CE,CE2,rst,rstComp,rstTB2 :	STD_LOGIC;   
 signal numero,valor,count: 	STD_LOGIC_VECTOR(3 downto 0); 
 signal GoodWord:			STD_LOGIC_VECTOR(8 downto 0);
 
-begin
-
-comb : process( sensores,clk,resetAbsoluto,CE,CE2,rst,numero,valor,count,GoodWord )
-begin
-
-	if (ResetAbsoluto='1') then
-	--port map--
-
-		TimeBasis: 	BaseDeTiempo port map(NewWord=>sensores,CE=>CE2);--genera el clk para el val
-		TimeBasis2: BaseDeTiempo2 port map(CLK=>CLK,rst_in=>ResetAbsoluto,rst_out=>rst);
-		BTN:     	bitsToNumbers port map(cadenaOriginalDeBits=>sensores,numero=>numero);
-		Comp:      	comparador port map(A=>valor,B=>numero,CLK=>CE,Clr=>ResetAbsoluto,Count=>Count,Bool=>abre);
-		Cont:     	Contador port map(CLK=>CE,clr=>ResetAbsoluto,count=>count);
-		Ro:       	ROM	port map (Count=>count,valor=>valor);
-		Val:		val2 port map(NewWord=>sensores,clk=>CE2,rst=>ResetAbsoluto,GoodWord=>GoodWord);--genera la palabra que el timeBasis va a procesar
-		TimeBasis12:BaseDeTiempo port map(NewWord=>GoodWord,CE=>CE);--generea el clk del sistema
--- En las prubas con botones se encontraron pulsos inesperados y se espera que el val solucione estos problemas
-
-	else
+begin 
+	
+	
 	--port map--
 		TimeBasis: 	BaseDeTiempo port map(NewWord=>sensores,CE=>CE2);--genera el clk para el val
-		TimeBasis2: BaseDeTiempo2 port map(CLK=>CLK,rst_in=>CE2,rst_out=>rst);
-		BTN:     	bitsToNumbers port map(cadenaOriginalDeBits=>sensores,numero=>numero);
+		TimeBasis2: BaseDeTiempo2 port map(CLK=>CLK,rst_in=>rstTB2,rst_out=>rstComp);
+		BTN:     	bitsToNumbers port map(cadenaOriginalDeBits=>GoodWord,numero=>numero);
 		Comp:      	comparador port map(A=>valor,B=>numero,CLK=>CE,Clr=>rst,Count=>Count,Bool=>abre);
 		Cont:     	Contador port map(CLK=>CE,clr=>rst,count=>count);
 		Ro:       	ROM	port map (Count=>count,valor=>valor);
 		Val:		val2 port map(NewWord=>sensores,clk=>CE2,rst=>rst,GoodWord=>GoodWord);--genera la palabra que el timeBasis va a procesar
 		TimeBasis12:BaseDeTiempo port map(NewWord=>GoodWord,CE=>CE);--generea el clk del sistema
 -- En las prubas con botones se encontraron pulsos inesperados y se espera que el val solucione estos problemas
+
+comb : process( resetAbsoluto,rstComp,CE2)
+begin
+
+	if (ResetAbsoluto='1') then
+		rst <= ResetAbsoluto;
+		rstTB2 <= ResetAbsoluto;
+	else
+		rst <= rstComp;	
+		rstTB2 <= CE2;
+																										   
 	end if ;
 	
 end process ; -- comb
