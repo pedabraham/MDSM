@@ -7,8 +7,8 @@ entity BasedeTCambio is
 	port(
 		clk         : in    std_logic;
 		rst_in      : in    std_logic;
-        cambioOn    : in    std_logic;--señal que indica que el cambio se tiene que ejecutar
-		paro  : out   std_logic -- señal que se va embiar para parar el cambio
+        cambioOn    : in    std_logic;--seÃ±al que indica que el cambio se tiene que ejecutar
+		paro  : out   std_logic -- seÃ±al que se va embiar para parar el cambio
 	);
 end BasedeTCambio;
 ---------------------------------------------------
@@ -40,10 +40,10 @@ begin
 		elsif ( clk'event AND clk = '1') then
 			P_S <= N_S;
 		end if;
-        end if;
         else 
         N_S <= (others => '0');
         P_S <= (others => '0');
-        paro <= '0';
+        paro <= '0'; 
+		end if;
 	end process sequ; 
 end Behavioral;

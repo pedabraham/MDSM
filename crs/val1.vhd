@@ -13,10 +13,11 @@ entity val1 is
 end val1;
 
 architecture Behavioral of val1 is 
-begin
+
     signal AlreadyInWord    :   STD_LOGIC_VECTOR(n-1 downto 0); --cadena de comprobacion o estado presente
     signal FinalWord        :   STD_LOGIC_VECTOR(n-1 downto 0); --cadena de comprobacion nueva o proximo estado
 
+begin
     comb: process (NewWord,AlreadyInWord)
     begin
         for I in 0 to n-1 loop
@@ -33,7 +34,7 @@ begin
         end loop;
     end process; 
 
-    sequ: process(CE,Clk,FinalWord) 
+    sequ: process(Clk,FinalWord) 
     begin
 
     if(Clk'event AND Clk='1') then 		

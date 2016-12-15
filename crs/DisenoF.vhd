@@ -56,7 +56,7 @@ component comparador is
         B       : in    STD_LOGIC_VECTOR(n-1 downto 0);
         CLK     : in    STD_LOGIC;
         Clr     : in    STD_LOGIC;
-        longCad : in    STD_LOGIC;
+        longCad : in    STD_LOGIC_VECTOR(3 downto 0);
         Count   : in    STD_LOGIC_VECTOR(3 downto 0);
         Bool    : out   STD_LOGIC
     );
@@ -106,7 +106,7 @@ component colaPush is
         paro        : in    STD_LOGIC; 
         cadenaFinal : out   STD_LOGIC_VECTOR(35 downto 0);
         estadoCambio: out   std_logic;
-        eatadoCadena: out   std_logic;
+        estadoCadena: out   std_logic;
         longitud    : out   std_logic_vector(3 downto 0)
     );
 end component;
@@ -125,14 +125,14 @@ component BasedeTCambio is
 	port(
 		clk         : in    std_logic;
 		rst_in      : in    std_logic;
-        cambioOn    : in    std_logic;--señal que indica que el cambio se tiene que ejecutar
-		paro  : out   std_logic -- señal que se va embiar para parar el cambio
+        cambioOn    : in    std_logic;--seÃ±al que indica que el cambio se tiene que ejecutar
+		paro  : out   std_logic -- seÃ±al que se va embiar para parar el cambio
 	);
 end component;
 
 component cadenaSelector is
   port (
-    seleccion   :   in  std_logic_vector(1  downto 0) ;
+    seleccion   :   in  std_logic;
     cadenaCC    :   in  std_logic_vector(35  downto 0) ;    
     cadenaF     :   out std_logic_vector(35 downto 0) 
   ) ;
@@ -165,10 +165,10 @@ begin
 		--Ro:       	ROM	port map (Count=>count,valor=>valor);
 		Val:		val2 port map(NewWord=>sensores,clk=>CE2,rst=>rst,GoodWord=>GoodWord);--genera la palabra que el timeBasis va a procesar
 		TimeBasis12:BaseDeTiempo port map(NewWord=>GoodWord,CE=>CE);--generea el clk del sistema
-		CPush:		ColaPush port map(numero=>numero,Clk=>CE,clr=>rstComp,cambio=>estadoCambio,count=>count,cadenaActu=>CadAROM,paro=>paro,cadenaFinal=>cadeanaFinal,estadoCambio=>estadoCambio,estadoCadena=>estadoCdena,longitud=>longitud);
+		CPush:		ColaPush port map(numero=>numero,Clk=>CE,clr=>rstComp,cambio=>estadoCambio,count=>count,cadenaActu=>CadAROM,paro=>paro,cadenaFinal=>cadenaFinal,estadoCambio=>estadoCambio,estadoCadena=>estadoCadena,longitud=>longitud);
 		EstadoCam:	verEstadoCam port map(bool=>bool,entraC=>Cambio,salidaC=>estadoCambio,rst=>rstComp,abre=>abre);
 		TimeBasisC: BasedeTCambio port map(clk=>CE,rst_in=>rst,cambioOn=>estadoCambio,paro=>paro);
-		Cadselector:cadenaSelector port map(seleccion=>estadoCad,cadenaCC=>cadenaFinal,cadenaF=>cadAROM);
+		Cadselector:cadenaSelector port map(seleccion=>estadoCadena,cadenaCC=>cadenaFinal,cadenaF=>cadAROM);
 		Ro2:		ROM2 port map(Count=>count,palabrasEnt=>cadAROM,Valor=>valor);			
 -- En las prubas con botones se encontraron pulsos inesperados y se espera que el val solucione estos problemas
 

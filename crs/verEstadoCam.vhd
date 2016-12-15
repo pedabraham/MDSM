@@ -14,7 +14,10 @@ end verEstadoCam ;
 
 architecture behavioral of verEstadoCam is
 
-begin
+begin 
+	
+	process(bool,entraC)
+	begin
     if (bool='1') then
         if (entraC='0') then
         salidaC <= '0';
@@ -32,7 +35,7 @@ begin
         rst <='0';
            
     end if ;
-
+	end process;
 
     
 
