@@ -16,31 +16,38 @@ end val2;
 architecture Behavioral of val2 is 
 
     signal AlreadyInWord    :   STD_LOGIC_VECTOR(n-1 downto 0); --cadena de comprobacion o estado presente
-    signal FinalWord        :   STD_LOGIC_VECTOR(n-1 downto 0); --cadena de comprobacion nueva o proximo estado
+    signal FinalWord        :   STD_LOGIC_VECTOR(n-1 downto 0); --cadena de comprobacion nueva o proximo estado	 
+	signal GoodWord2        :   STD_LOGIC_VECTOR(n-1 downto 0);
 
 begin
 
 
     comb: process (NewWord,AlreadyInWord)
     begin
-
+		if( NewWord /= "000000000")then
         if (NewWord = AlreadyInWord) then
-            GoodWord    <= (others => '0');
+            GoodWord2    <= (others => '0');
             FinalWord   <= AlreadyInWord;
         else
-            GoodWord     <= NewWord; 
+            GoodWord2     <= NewWord; 
             FinalWord    <= NewWord;
         end if ;
+		else  
+			FinalWord   <= AlreadyInWord;
+			GoodWord2    <= (others => '0');
+		end if;
+	
 
     end process; 
 
-    sequ: process(Clk,FinalWord,rst) 
+    sequ: process(Clk,rst) 
     begin
     if(rst = '1') then
 			AlreadyInWord <= (others => '0');
 
     elsif(Clk'event AND Clk='1') then 		
-				AlreadyInWord<=FinalWord;		
+		AlreadyInWord<=FinalWord;
+		GoodWord <= GoodWord2;
 	end if;
     end process sequ; 
 
