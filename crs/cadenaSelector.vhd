@@ -4,7 +4,7 @@ library ieee ;
 
 entity cadenaSelector is
   port (
-    seleccion   :   in  std_logic_vector(1  downto 0) ;
+    seleccion   :   in  STD_LOGIC;
     cadenaCC    :   in  std_logic_vector(35  downto 0) ;    
     cadenaF     :   out std_logic_vector(35 downto 0) 
   ) ;

@@ -8,13 +8,13 @@ entity comparador is
         n:integer:=4
     );
     port(
-        A: in STD_LOGIC_VECTOR(n-1 downto 0);
-        B: in STD_LOGIC_VECTOR(n-1 downto 0);
-        CLK: in STD_LOGIC;
-        Clr : in STD_LOGIC;
-        longCad :   STD_LOGIC;
-        Count : in STD_LOGIC_VECTOR(3 downto 0);
-        Bool: out STD_LOGIC
+        A       : in    STD_LOGIC_VECTOR(n-1 downto 0);
+        B       : in    STD_LOGIC_VECTOR(n-1 downto 0);
+        CLK     : in    STD_LOGIC;
+        Clr     : in    STD_LOGIC;
+        longCad : in    STD_LOGIC;
+        Count   : in    STD_LOGIC_VECTOR(3 downto 0);
+        Bool    : out   STD_LOGIC
     );
 end comparador;
 
@@ -24,7 +24,7 @@ signal cadenaComparacion    :   std_logic_vector(8 downto 0) ;
 begin
     process (A,B,CLK,Clr,Count)
     begin 
-        cadenaComparacion <= (8-longCad => '0') & (others => '1');    
+        cadenaComparacion <= (8 downto conv_integer(longCad)  => '0') & (others => '1');    
         if(CLK'event AND CLK = '1') then        
             if( A = B) then
                 N_S(conv_integer(Count)) <= '1';

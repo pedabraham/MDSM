@@ -48,17 +48,18 @@ component ROM is
 end component;
 
 component comparador is 
-	generic(
-	    n:integer:=4
-	);
-	 port(
-	    A: in STD_LOGIC_VECTOR(n-1 downto 0);
-        B: in STD_LOGIC_VECTOR(n-1 downto 0);
-        CLK: in STD_LOGIC;
-        Clr : in STD_LOGIC;
-        Count : in STD_LOGIC_VECTOR(3 downto 0);
-        Bool: out STD_LOGIC
-	);
+    generic(
+        n:integer:=4
+    );
+    port(
+        A       : in    STD_LOGIC_VECTOR(n-1 downto 0);
+        B       : in    STD_LOGIC_VECTOR(n-1 downto 0);
+        CLK     : in    STD_LOGIC;
+        Clr     : in    STD_LOGIC;
+        longCad : in    STD_LOGIC;
+        Count   : in    STD_LOGIC_VECTOR(3 downto 0);
+        Bool    : out   STD_LOGIC
+    );
 end component;
 
 --component Verificador1 is
@@ -159,12 +160,12 @@ begin
 		TimeBasis: 	BaseDeTiempo port map(NewWord=>sensores,CE=>CE2);--genera el clk para el val
 		TimeBasis2: BaseDeTiempo2 port map(CLK=>CLK,rst_in=>rstTB2,rst_out=>rstComp);
 		BTN:     	bitsToNumbers port map(cadenaOriginalDeBits=>GoodWord,numero=>numero);
-		Comp:      	comparador port map(A=>valor,B=>numero,CLK=>CE,Clr=>rst,Count=>Count,Bool=>bool);
+		Comp:      	comparador port map(A=>valor,B=>numero,CLK=>CE,Clr=>rst,longCad=>longitud,Count=>Count,Bool=>bool);
 		Cont:     	Contador port map(CLK=>CE,clr=>rst,count=>count);
 		--Ro:       	ROM	port map (Count=>count,valor=>valor);
 		Val:		val2 port map(NewWord=>sensores,clk=>CE2,rst=>rst,GoodWord=>GoodWord);--genera la palabra que el timeBasis va a procesar
 		TimeBasis12:BaseDeTiempo port map(NewWord=>GoodWord,CE=>CE);--generea el clk del sistema
-		CPush:		ColaPush port map(numero=>numero,Clk=>CE,clr=>rstComp,cambio=>estadoCambio,count=>count,cadenaActu=>cadenaFinal,paro=>paro,cadenaFinal=>cadeanaFinal,estadoCambio=>estadoCambio,estadoCadena=>estadoCdena,longitud=>longitud);
+		CPush:		ColaPush port map(numero=>numero,Clk=>CE,clr=>rstComp,cambio=>estadoCambio,count=>count,cadenaActu=>CadAROM,paro=>paro,cadenaFinal=>cadeanaFinal,estadoCambio=>estadoCambio,estadoCadena=>estadoCdena,longitud=>longitud);
 		EstadoCam:	verEstadoCam port map(bool=>bool,entraC=>Cambio,salidaC=>estadoCambio,rst=>rstComp,abre=>abre);
 		TimeBasisC: BasedeTCambio port map(clk=>CE,rst_in=>rst,cambioOn=>estadoCambio,paro=>paro);
 		Cadselector:cadenaSelector port map(seleccion=>estadoCad,cadenaCC=>cadenaFinal,cadenaF=>cadAROM);
