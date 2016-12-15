@@ -23,7 +23,6 @@ signal N_S : std_logic_vector(9 downto 0);
 signal cadenaComparacion    :   std_logic_vector(8 downto 0) ;
 begin
     process (A,B,CLK,Clr,Count)
-
     begin
 		if(conv_integer(longCad)<9)then
 			cadenaComparacion <= (others => '1');
@@ -31,7 +30,6 @@ begin
         cadenaComparacion <= (8 downto conv_integer(longCad)  => '0') & (conv_integer(longCad)-1 downto 0 => '1'); 
 		end if;
         if(CLK'event AND CLK = '1') then        
-
     begin 
         cadenaComparacion <= (8 downto conv_integer(longCad)  => '0') & (others => '1');    
         if(Clr = '1')then
