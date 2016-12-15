@@ -25,17 +25,19 @@ begin
     process (A,B,CLK,Clr,Count)
     begin 
         cadenaComparacion <= (8 downto conv_integer(longCad)  => '0') & (others => '1');    
-        if(CLK'event AND CLK = '1') then        
+        if(Clr = '1')then
+            N_S <= (others => '0');
+            Bool <= '0';--
+        elsif(CLK'event AND CLK = '1') then        
             if( A = B) then
                 N_S(conv_integer(Count)) <= '1';
             else
                 N_S(conv_integer(Count)) <= '0';
             end if;
-        elsif(N_S(8 downto 0) = cadenaComparacion )then
+            end if;
+        if(N_S(8 downto 0) = cadenaComparacion )then
             Bool <= '1';
-        elsif(Clr = '1')then
-            N_S <= (others => '0');
-            Bool <= '0';--
+        
         else
             Bool <= '0';
         end if;
