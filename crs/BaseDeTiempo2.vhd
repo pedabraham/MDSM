@@ -19,8 +19,8 @@ architecture Behavioral of BasedeTiempo2 is
 begin
 	comb : process(P_S)
 	begin
-		--if(P_S = "11101110011010110010100000000") then
-		if(P_S = "0011") then
+		if(P_S = "11101110011010110010100000000") then
+		--if(P_S = "0011") then
 			N_S <= (others => '0');
 			rst_out <= '1';  
 		else 
